@@ -64,14 +64,14 @@ public class HoaDon_service {
             }
         }
     }
-    public int insertDonDH(QLSanPham sp,NhanVien nv){
-        int result=0;
-        sql="";
-        try {
-            
-        } catch (Exception e) {
-        }
-    }
+//    public int insertDonDH(QLSanPham sp,NhanVien nv){
+//        int result=0;
+//        sql="";
+//        try {
+//            
+//        } catch (Exception e) {
+//        }
+//    }
     public List<QLSanPham> getAllGioHang(){
         return list2;
     }
