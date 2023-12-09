@@ -48,7 +48,7 @@ public class ChiTietHoaDon_Service {
     }
     public List<CTHD> getCTHD(String ma){
         List<CTHD> list2=new ArrayList<>();
-        sql="select MatHang.TenHang,MatHang.MaMatHang,DonDatHang.SoLuongSP,MatHang.GiaSP,MatHang.GiaSP,TinhTrangDonHang.NguoiPhuTrach,NhanVien.MaNV  from DonDatHang inner join HoaDon on HoaDon.MaHoaDon=DonDatHang.MaHoaDon  inner join ChiTietDatHang on ChiTietDatHang.MaDonDatHang=DonDatHang.MaDon inner join MatHang on MatHang.MaMatHang=ChiTietDatHang.MaMatHang inner join TinhTrangDonHang on TinhTrangDonHang.MaDonHang=DonDatHang.MaDon inner join NhanVien on NhanVien.MaNV=TinhTrangDonHang.MaNV where HoaDon.MaHoaDon =?";
+        sql="  select MatHang.TenHang,MatHang.MaMatHang,ChiTietDatHang.SoLuongSP,MatHang.GiaSP,(ChiTietDatHang.SoLuongSP*MatHang.GiaSP) as TongTien,TinhTrangDonHang.NguoiPhuTrach,NhanVien.MaNV  from DonDatHang inner join HoaDon on HoaDon.MaDonDatHang=DonDatHang.MaDon  inner join ChiTietDatHang on ChiTietDatHang.MaDonDatHang=DonDatHang.MaDon inner join MatHang on MatHang.MaMatHang=ChiTietDatHang.MaMatHang inner join TinhTrangDonHang on TinhTrangDonHang.MaDonHang=DonDatHang.MaDon inner join NhanVien on NhanVien.MaNV=TinhTrangDonHang.MaNV  where HoaDon.MaHoaDon =?";
         try {
             con=DBConnect.getConnection();
             ps=con.prepareStatement(sql);

@@ -15,7 +15,10 @@ public class QLSanPham {
     private String maNSX;
     private int soLuongMua;
     private double thanhtien;
+    private String SDTkhach;
+    private String ngayDat;
 
+   
     public QLSanPham() {
     }
 
@@ -27,13 +30,24 @@ public class QLSanPham {
         this.maNSX = maNSX;
     }
 
-    public QLSanPham(String masp, String tensp, double giasp, int soLuongMua, String magiamgia, double thanhtien) {
+
+    public QLSanPham(String masp, String tensp, String magiamgia, double giasp, int soLuongMua, double thanhtien, String SDTkhach,String ngayDat) {
         this.masp = masp;
         this.tensp = tensp;
+        this.magiamgia = magiamgia;
         this.giasp = giasp;
         this.soLuongMua = soLuongMua;
-        this.magiamgia = magiamgia;
         this.thanhtien = thanhtien;
+        this.SDTkhach = SDTkhach;
+        this.ngayDat=ngayDat;
+    }
+
+    public String getNgayDat() {
+        return ngayDat;
+    }
+
+    public void setNgayDat(String ngayDat) {
+        this.ngayDat = ngayDat;
     }
 
     public String getMagiamgia() {
@@ -42,6 +56,14 @@ public class QLSanPham {
 
     public void setMagiamgia(String magiamgia) {
         this.magiamgia = magiamgia;
+    }
+
+    public String getSDTkhach() {
+        return SDTkhach;
+    }
+
+    public void setSDTkhach(String SDTkhach) {
+        this.SDTkhach = SDTkhach;
     }
 
    
@@ -105,7 +127,7 @@ public class QLSanPham {
     }
     
     public Object[] toDataRow(){
-        return new Object[]{this.getMasp(),this.getTensp(),this.getGiasp(),this.getSoluongsp(),this.getMaNSX()};
+        return new Object[]{this.getTensp(),this.getMasp(),this.getGiasp(),this.getSoluongsp(),this.getMaNSX()};
         
     }
 }

@@ -5,12 +5,11 @@
 package View;
 
 import Model.CTHD;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import Service.thongKeDoanhThu;
+
 /**
  *
  * @author Admin
@@ -20,19 +19,20 @@ public class ThongkeDoanhThu_Form extends javax.swing.JFrame {
     /**
      * Creates new form ThongkeDoanhThu_Form
      */
-    DefaultTableModel model= new DefaultTableModel();
-    thongKeDoanhThu ss= new thongKeDoanhThu();
+    DefaultTableModel model = new DefaultTableModel();
+    thongKeDoanhThu ss = new thongKeDoanhThu();
+
     public ThongkeDoanhThu_Form() {
         initComponents();
         setLocationRelativeTo(null);
         fillTable(ss.getAll());
     }
-    
-    public void fillTable(List<CTHD> list){
-        model= (DefaultTableModel) tblDoanhThu.getModel();
+
+    public void fillTable(List<CTHD> list) {
+        model = (DefaultTableModel) tblDoanhThu.getModel();
         model.setRowCount(0);
         for (CTHD cthd : list) {
-            Object[] row= new Object[]{cthd.getMa(),cthd.getNgayTao(),cthd.getTongTienHD()};
+            Object[] row = new Object[]{cthd.getMa(), cthd.getNgayTao(), cthd.getTongTienHD()};
             model.addRow(row);
         }
     }
@@ -55,6 +55,8 @@ public class ThongkeDoanhThu_Form extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        lbl_SLhoaDon = new javax.swing.JLabel();
+        lbl_TongTien = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -88,7 +90,11 @@ public class ThongkeDoanhThu_Form extends javax.swing.JFrame {
 
         jLabel3.setText("Tổng số hóa đơn:");
 
-        jLabel4.setText("Tổng tiền hóa đơn:");
+        jLabel4.setText("Doanh thu :");
+
+        lbl_SLhoaDon.setText("0");
+
+        lbl_TongTien.setText("0");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -97,17 +103,27 @@ public class ThongkeDoanhThu_Form extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addContainerGap(80, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lbl_SLhoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                        .addComponent(lbl_TongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(jLabel3)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(lbl_SLhoaDon))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel4)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(lbl_TongTien))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
@@ -162,7 +178,26 @@ public class ThongkeDoanhThu_Form extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        fillTable(ss.timTheoNgay(jDateChooser1));
+        if (jDateChooser1.getDate()==null) {
+            JOptionPane.showMessageDialog(this, "Bạn chưa chọn date");
+        } else {
+            if (ss.timTheoNgay(jDateChooser1).size() > 0) {
+                fillTable(ss.timTheoNgay(jDateChooser1));
+                double tongtien=0;
+                int soLuong=0;
+                for (CTHD hd : ss.timTheoNgay(jDateChooser1)) {
+                    tongtien+=hd.getTongTienHD();
+                    soLuong+=1;
+                }
+                lbl_SLhoaDon.setText(String.valueOf(soLuong));
+                lbl_TongTien.setText(String.valueOf(tongtien));
+                JOptionPane.showMessageDialog(this, "Tìm thành công");
+                
+            } else {
+                JOptionPane.showMessageDialog(this, "Không có thông tin");
+            }
+        }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -209,6 +244,8 @@ public class ThongkeDoanhThu_Form extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbl_SLhoaDon;
+    private javax.swing.JLabel lbl_TongTien;
     private javax.swing.JTable tblDoanhThu;
     // End of variables declaration//GEN-END:variables
 }

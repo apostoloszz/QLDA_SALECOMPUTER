@@ -31,7 +31,7 @@ public class HoaDon_Form extends javax.swing.JFrame {
     }
 
     QLSanPham readForm() {
-        String ten, ma, magiamgia;
+        String ten, ma, magiamgia,ngayDat,SDTkhach;
         int soluong;
         double thanhtien, giatien;
         ten = txtTenSanPham.getText();
@@ -40,7 +40,9 @@ public class HoaDon_Form extends javax.swing.JFrame {
         giatien = Double.parseDouble(txtGia.getText());
         magiamgia = String.valueOf(cboKhuyenMai.getSelectedItem()) + "%";
         thanhtien = Double.parseDouble(txtThanhTien.getText());
-        return new QLSanPham(ma, ten, giatien, soluong, magiamgia, thanhtien);
+        SDTkhach=txtSĐTK.getText();
+        ngayDat=String.valueOf(java.time.LocalDate.now());
+        return new QLSanPham(ma,ten,  magiamgia, giatien, soluong, thanhtien, SDTkhach, ngayDat);
     }
 
     void fillTableGioHang() {
@@ -849,17 +851,15 @@ public class HoaDon_Form extends javax.swing.JFrame {
         if (ss.getAllGioHang().size() > 0) {
             int result = JOptionPane.showConfirmDialog(null, "Bạn có muốn thanh toán không", "Thanh toán", JOptionPane.YES_NO_OPTION, 3);
             if (result == JOptionPane.YES_OPTION) {
+//                ss.insertDonDH(readForm());
                 JOptionPane.showMessageDialog(this, "Thanh toán thành công");
                 model = (DefaultTableModel) tblGioHang.getModel();
                 model.setRowCount(0);
             } else if (result == JOptionPane.NO_OPTION) {
-
             }
         } else {
             JOptionPane.showMessageDialog(this, "Thanh toán thất bại");
         }
-
-
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
